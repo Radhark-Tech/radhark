@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "github.com/Radhark-Tech/radhark-grpc/radwallet";
+option go_package = "github.com/Radhark-Tech/radhark-go/radwallet";
 
 option java_multiple_files = true;
 option java_outer_classname = "AuthProto";
