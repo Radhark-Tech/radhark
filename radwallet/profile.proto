@@ -4,7 +4,7 @@ option go_package = "github.com/Radhark-Tech/radhark-go/radwallet";
 
 option java_multiple_files = true;
 option java_outer_classname = "ProfileProto";
-option java_package = "com.radhark.radwallet";
+option java_package = "radhark.radwallet";
 
 package radhark.radwallet;
 
