@@ -1,0 +1,30 @@
+type: google.api.Service
+config_version: 3
+name: "*.apigateway.PROJECT_ID.cloud.goog"
+title: Radwallet Service
+apis:
+  - name: radhark.radwallet.Auth
+  - name: radhark.radwallet.Profile
+authentication:
+  providers:
+  - id: rad_auth
+    issuer: radwallet
+    jwks_uri: https://storage.googleapis.com/dev.radwallet.com.br/.well-known/jwks.json
+    audiences: "radwallet-dev"
+    jwt_locations:
+    - header: "authorization"
+      value_prefix: "Bearer "
+  rules:
+  - selector: "radhark.radwallet.Profile.*"
+    requirements:
+    - provider_id: rad_auth
+usage:
+  rules:
+    - selector: "*"
+      allow_unregistered_calls: true
+backend:
+  rules:
+    - selector: "radhark.radwallet.Auth.*"
+      address: grpcs://auth-5yx3hbvt6q-ue.a.run.app
+    - selector: "radhark.radwallet.Profile.*"
+      address: grpcs://profile-5yx3hbvt6q-ue.a.run.app

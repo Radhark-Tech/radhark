@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+option go_package = "github.com/Radhark-Tech/radhark-grpc/radwallet";
+
+option java_multiple_files = true;
+option java_outer_classname = "AuthProto";
+option java_package = "com.radhark.radwallet";
+
+package radhark.radwallet;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+message Exchange {
+  string id = 1 [json_name = "id"];
+  string name = 2 [json_name = "name"];
+  string transactionCoin = 3 [json_name = "transaction_coin"];
+}
+
+message Data {
+  string email = 1 [json_name = "email"];
+  bool verified = 2 [json_name = "verified"];
+  repeated Exchange exchanges = 3 [json_name = "configured_exchanges"];
+}
+
+message LoginResponse {
+  string accessToken = 1 [json_name = "access_token"];
+  string tokenType = 2 [json_name = "token_type"];
+  Data data = 3 [json_name = "data"];
+}
+
+message LoginRequest {
+    string firebaseToken = 1 [json_name = "firebase_token"];
+    string email = 2;
+}
+
+message SignupResponse {
+  string id = 1 [json_name = "id"];
+  string email = 2 [json_name = "email"];
+  bool verified = 3 [json_name = "verified"];
+}
+
+message SignupRequest {
+    string uid = 1;
+    string email = 2;
+}
+
+message TokenResponse {
+  bool valid = 1 [json_name = "valid"];
+  message Claim {
+    string sub = 1;
+    string email = 2;
+  }
+  Claim claims = 2;
+}
+
+message TokenRequest {
+    string token = 1;
+}
+
+message PEMResponse {
+  message Key {
+    bytes e = 1;
+    string kty = 2;
+    string n = 3;
+    string alg = 4;
+    string kid = 5;
+    string use = 6;
+  }
+  repeated Key keys = 1;
+}
+
+service Auth {
+  rpc Login (LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = { 
+      post: "/api/v1/auth/token"
+      body: "*"
+    };
+  }
+  rpc Signup (SignupRequest) returns (SignupResponse) {
+    option (google.api.http) = { 
+      post: "/api/v1/auth/signup"
+      body: "*"
+    };
+  }
+  rpc ValidateToken (TokenRequest) returns (TokenResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/validate"
+      body: "*"
+    };
+  }
+  rpc GetPEM (google.protobuf.Empty) returns (PEMResponse) {
+    option (google.api.http) = { get: "/api/v1/.well-known/jwks.json" };
+  }
+}

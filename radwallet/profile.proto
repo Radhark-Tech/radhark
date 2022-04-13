@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+option go_package = "github.com/Radhark-Tech/radhark-grpc/radwallet";
+
+option java_multiple_files = true;
+option java_outer_classname = "ProfileProto";
+option java_package = "com.radhark.radwallet";
+
+package radhark.radwallet;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "auth.proto";
+
+message ExchangePatch {
+  string id = 1;
+  string api_key = 2;
+  string secret_key = 3;
+  string transaction_coin = 4;
+}
+
+message ProfileUpdateRequest {
+  repeated ExchangePatch exchanges = 1;
+}
+
+message ProfileResponse {
+  string id = 1;
+  string email = 2;
+  repeated radhark.radwallet.Exchange exchanges = 3;
+}
+
+
+
+service Profile {
+    rpc UpdateProfile (ProfileUpdateRequest) returns (ProfileResponse) {
+      option (google.api.http) = { 
+        patch: "/api/v1/profile"
+        body: "*"
+      };
+    }
+    rpc GetProfile (google.protobuf.Empty) returns (ProfileResponse) {
+      option (google.api.http) = { 
+        get: "/api/v1/profile"
+      };
+    }
+}
