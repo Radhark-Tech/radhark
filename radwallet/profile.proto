@@ -14,9 +14,8 @@ import "auth.proto";
 
 message ExchangePatch {
   string id = 1;
-  string api_key = 2;
-  string secret_key = 3;
-  string transaction_coin = 4;
+  string api_key = 2 [json_name = "api_key"];
+  string secret_key = 3 [json_name = "secret_key"];
 }
 
 message ProfileUpdateRequest {
