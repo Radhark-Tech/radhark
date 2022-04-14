@@ -4,12 +4,11 @@ option go_package = "github.com/Radhark-Tech/radhark-go/radwallet";
 
 option java_multiple_files = true;
 option java_outer_classname = "AuthProto";
-option java_package = "com.radhark.radwallet";
+option java_package = "radhark.radwallet";
 
 package radhark.radwallet;
 
 import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
 
 message Exchange {
   string id = 1 [json_name = "id"];
@@ -82,14 +81,5 @@ service Auth {
       post: "/api/v1/auth/signup"
       body: "*"
     };
-  }
-  rpc ValidateToken (TokenRequest) returns (TokenResponse) {
-    option (google.api.http) = {
-      post: "/api/v1/auth/validate"
-      body: "*"
-    };
-  }
-  rpc GetPEM (google.protobuf.Empty) returns (PEMResponse) {
-    option (google.api.http) = { get: "/api/v1/.well-known/jwks.json" };
   }
 }
