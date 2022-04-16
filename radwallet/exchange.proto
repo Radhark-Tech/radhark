@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option go_package = "github.com/Radhark-Tech/radhark-go/radwallet";
+
+option java_multiple_files = true;
+option java_outer_classname = "ProfileProto";
+option java_package = "radhark.radwallet";
+
+package radhark.radwallet;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+
+message ExchangeCommon {
+  string id = 1 [json_name = "id"];
+  string name = 2 [json_name = "name"];
+}
+
+message ExchangeList {
+  repeated ExchangeCommon exchanges = 1;
+}
+
+message ExchangeUser {
+  string id = 1 [json_name = "id"];
+  string api_key = 2 [json_name = "api_key"];
+  string secret_key = 3 [json_name = "secret_key"];
+}
+
+
+service Exchange {
+    rpc ListExchanges (google.protobuf.Empty) returns (ExchangeList) {
+      option (google.api.http) = { 
+        get: "/api/v1/exchange"
+      };
+    }
+}

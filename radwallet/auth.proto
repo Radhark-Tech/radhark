@@ -9,17 +9,12 @@ option java_package = "radhark.radwallet";
 package radhark.radwallet;
 
 import "google/api/annotations.proto";
-
-message Exchange {
-  string id = 1 [json_name = "id"];
-  string name = 2 [json_name = "name"];
-  string transactionCoin = 3 [json_name = "transaction_coin"];
-}
+import "exchange.proto";
 
 message Data {
   string email = 1 [json_name = "email"];
   bool verified = 2 [json_name = "verified"];
-  repeated Exchange exchanges = 3 [json_name = "configured_exchanges"];
+  repeated radhark.radwallet.ExchangeCommon exchanges = 3 [json_name = "configured_exchanges"];
 }
 
 message LoginResponse {

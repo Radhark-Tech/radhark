@@ -10,22 +10,16 @@ package radhark.radwallet;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "auth.proto";
-
-message ExchangePatch {
-  string id = 1;
-  string api_key = 2 [json_name = "api_key"];
-  string secret_key = 3 [json_name = "secret_key"];
-}
+import "exchange.proto";
 
 message ProfileUpdateRequest {
-  repeated ExchangePatch exchanges = 1;
+  repeated radhark.radwallet.ExchangeUser exchanges = 1;
 }
 
 message ProfileResponse {
   string id = 1;
   string email = 2;
-  repeated radhark.radwallet.Exchange exchanges = 3;
+  repeated radhark.radwallet.ExchangeCommon exchanges = 3;
 }
 
 
