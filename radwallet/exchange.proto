@@ -26,12 +26,38 @@ message ExchangeUser {
   string api_key = 2 [json_name = "api_key"];
   string secret_key = 3 [json_name = "secret_key"];
 }
+message ExchangeId {
+  string id = 1 [json_name = "id"];
+  string coin = 2 [json_name = "coin"];
+}
+message UserPatrimony {
+  float patrimony = 1;
+  repeated Coin coins = 2;
+}
+message UserInvested {
+  float invested = 1;
+}
+message Coin {
+  float amount = 1;
+  float amount_converted = 2;
+  float percentage = 3;
+}
 
 
 service Exchange {
     rpc ListExchanges (google.protobuf.Empty) returns (ExchangeList) {
       option (google.api.http) = { 
         get: "/api/v1/exchange"
+      };
+    }
+    rpc GetUserPatrimony (ExchangeId) returns (UserPatrimony) {
+      option (google.api.http) = { 
+        get: "/api/v1/exchange/{id}/patrimony"
+      };
+    }
+    rpc GetUserInvested (ExchangeId) returns (UserInvested) {
+      option (google.api.http) = { 
+        get: "/api/v1/exchange/{id}/invested"
       };
     }
 }
