@@ -31,16 +31,17 @@ message ExchangeId {
   string coin = 2 [json_name = "coin"];
 }
 message UserPatrimony {
-  float patrimony = 1;
+  double patrimony = 1;
   repeated Coin coins = 2;
 }
 message UserInvested {
-  float invested = 1;
+  double invested = 1;
 }
 message Coin {
-  float amount = 1;
-  float amount_converted = 2;
-  float percentage = 3;
+  string asset = 1;
+  double amount = 2;
+  double amount_converted = 3 [json_name = "amount_converted"];
+  string percentage = 4 [json_name = "percentage"];
 }
 
 
