@@ -24,7 +24,7 @@ message LoginResponse {
 }
 
 message LoginRequest {
-    string firebaseToken = 1 [json_name = "firebase_token"];
+    string firebase_token = 1 [json_name = "firebase_token"];
     string email = 2;
 }
 

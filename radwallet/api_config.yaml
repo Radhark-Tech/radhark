@@ -1,6 +1,6 @@
 type: google.api.Service
 config_version: 3
-name: "*.apigateway.PROJECT_ID.cloud.goog"
+name: gateway-5yx3hbvt6q-ue.a.run.app
 title: Radwallet Service
 apis:
   - name: radhark.radwallet.Auth
