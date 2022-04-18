@@ -22,6 +22,11 @@ message ProfileResponse {
   repeated radhark.radwallet.ExchangeCommon exchanges = 3;
 }
 
+message ExchangeDataRequest {
+  string user_id = 1;
+  string exchange_id = 2;
+}
+
 
 
 service Profile {
@@ -36,4 +41,5 @@ service Profile {
         get: "/api/v1/profile"
       };
     }
+    rpc GetProfileInternal (ExchangeDataRequest) returns (radhark.radwallet.ExchangeUser) {}
 }
