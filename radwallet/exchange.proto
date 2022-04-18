@@ -34,8 +34,17 @@ message UserPatrimony {
   double patrimony = 1;
   repeated Coin coins = 2;
 }
+
+message Transaction {
+  string coin = 1;
+  double amount = 2;
+  string created_at = 3 [json_name = "created_at"];
+  string updated_at = 4 [json_name = "updated_at"];
+}
+
 message UserInvested {
   double invested = 1;
+  repeated Transaction transactions = 2;
 }
 message Coin {
   string asset = 1;
