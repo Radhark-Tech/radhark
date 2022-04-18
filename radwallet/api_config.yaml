@@ -4,13 +4,17 @@ name: "*.apigateway.PROJECT_ID.cloud.goog"
 title: Radwallet Service
 apis:
   - name: radhark.radwallet.Auth
+  - name: radhark.radwallet.Exchange
   - name: radhark.radwallet.Profile
 authentication:
   providers:
   - id: google_service_account
-    # Replace SERVICE-ACCOUNT-ID with your service account's email address.
-    issuer: datastore-credentials@radwallet-dev.iam.gserviceaccount.com
-    jwks_uri: https://www.googleapis.com/robot/v1/metadata/x509/datastore-credentials@radwallet-dev.iam.gserviceaccount.com
+    issuer: https://accounts.google.com
+    jwks_uri: https://www.googleapis.com/oauth2/v1/certs
+    audiences: "radwallet-dev"
+    jwt_locations:
+    - header: "authorization"
+      value_prefix: "Bearer "
   - id: rad_auth
     issuer: radwallet
     jwks_uri: https://storage.googleapis.com/dev.radwallet.com.br/.well-known/jwks.json
@@ -19,15 +23,15 @@ authentication:
     - header: "authorization"
       value_prefix: "Bearer "
   rules:
-  - selector: "radhark.radwallet.Profile.*"
+  - selector: "radhark.radwallet.Profile.GetProfileInternal"
+    requirements:
+    - provider_id: google_service_account
+  - selector: "radhark.radwallet.Profile.GetProfile,radhark.radwallet.Profile.UpdateProfile"
     requirements:
     - provider_id: rad_auth
   - selector: "radhark.radwallet.Exchange.*"
     requirements:
     - provider_id: rad_auth
-  - selector: "radhark.radwallet.Profile.GetProfileInternal"
-    requirements:
-      - provider_id: google_service_account
 usage:
   rules:
     - selector: "*"
@@ -38,3 +42,5 @@ backend:
       address: grpcs://auth-5yx3hbvt6q-ue.a.run.app
     - selector: "radhark.radwallet.Profile.*"
       address: grpcs://profile-5yx3hbvt6q-ue.a.run.app
+    - selector: "radhark.radwallet.Exchange.*"
+      address: grpcs://exchange-5yx3hbvt6q-ue.a.run.app
