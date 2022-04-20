@@ -32,7 +32,8 @@ message ExchangeId {
 }
 message UserPatrimony {
   double patrimony = 1;
-  repeated Coin coins = 2;
+  map<string, double> converted = 2 [json_name = "patrimony_converted"];
+  repeated Coin coins = 3;
 }
 
 message Transaction {
@@ -46,11 +47,16 @@ message UserInvested {
   double invested = 1;
   repeated Transaction transactions = 2;
 }
+message Converted {
+  string name = 1;
+  double amount = 2;
+}
 message Coin {
   string asset = 1;
   double amount = 2;
   double amount_converted = 3 [json_name = "amount_converted"];
-  string percentage = 4 [json_name = "percentage"];
+  repeated Converted converted_coins = 4 [json_name = "converted_coins"];
+  string percentage = 5 [json_name = "percentage"];
 }
 
 
