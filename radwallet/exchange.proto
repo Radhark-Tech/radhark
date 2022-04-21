@@ -45,7 +45,8 @@ message Transaction {
 
 message UserInvested {
   double invested = 1;
-  repeated Transaction transactions = 2;
+  map<string, double> converted = 2 [json_name = "invested_converted"];
+  repeated Transaction transactions = 3;
 }
 message Converted {
   string name = 1;
