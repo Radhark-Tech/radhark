@@ -30,6 +30,13 @@ message ExchangeId {
   string id = 1 [json_name = "id"];
   string coin = 2 [json_name = "coin"];
 }
+message CoinDetail {
+  string id = 1 [json_name = "id"];
+  string coin = 2 [json_name = "coin"];
+  string vsCoin = 3 [json_name = "vs_coin"];
+  string interval = 4 [json_name = "interval"];
+  string limit = 5 [json_name = "limit"];
+}
 message UserPatrimony {
   double patrimony = 1;
   map<string, double> converted = 2 [json_name = "patrimony_converted"];
@@ -59,7 +66,22 @@ message Coin {
   repeated Converted converted_coins = 4 [json_name = "converted_coins"];
   string percentage = 5 [json_name = "percentage"];
 }
-
+message Candle {
+  string openTime = 1 [json_name = "open_time"];
+  string open = 2;
+  string high = 3;
+  string low = 4;
+  string close = 5;
+  string volume = 6;
+  string closeTime = 7 [json_name = "close_time"];
+  int64 tradeNum = 8 [json_name = "trade_num"];
+  string TakerBuyBaseAssetVolume = 9 [json_name = "taker_buy_base_asset_volume"];
+  string TakerBuyQuoteAssetVolume = 10 [json_name = "taker_buy_quote_asset_volume"];
+}
+message CoinDetailResponse {
+  string symbol = 1;
+  repeated Candle candles = 2;
+}
 
 service Exchange {
     rpc ListExchanges (google.protobuf.Empty) returns (ExchangeList) {
@@ -75,6 +97,11 @@ service Exchange {
     rpc GetUserInvested (ExchangeId) returns (UserInvested) {
       option (google.api.http) = { 
         get: "/api/v1/exchange/{id}/invested"
+      };
+    }
+    rpc GetCoinDetail (CoinDetail) returns (CoinDetailResponse) {
+      option (google.api.http) = { 
+        get: "/api/v1/exchange/{id}/coin/{coin}"
       };
     }
 }
