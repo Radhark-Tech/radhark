@@ -62,7 +62,7 @@ message Converted {
 message Coin {
   string asset = 1;
   double amount = 2;
-  double amount_converted = 3 [json_name = "amount_converted"];
+  string type = 3;
   repeated Converted converted_coins = 4 [json_name = "converted_coins"];
   string percentage = 5 [json_name = "percentage"];
 }
