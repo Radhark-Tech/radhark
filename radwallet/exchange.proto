@@ -78,9 +78,21 @@ message Candle {
   string TakerBuyBaseAssetVolume = 9 [json_name = "taker_buy_base_asset_volume"];
   string TakerBuyQuoteAssetVolume = 10 [json_name = "taker_buy_quote_asset_volume"];
 }
+message TransactionPair {
+  string symbol = 1;
+	string price = 2;
+	string origQty = 3;
+	string status = 4;
+	string orderType = 5;
+	string side = 6;
+	int64 time = 7;
+	int64 updateTime = 8;
+}
 message CoinDetailResponse {
   string symbol = 1;
   repeated Candle candles = 2;
+  repeated TransactionPair transactions = 3;
+
 }
 
 service Exchange {
